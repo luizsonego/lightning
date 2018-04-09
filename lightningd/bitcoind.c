@@ -797,7 +797,7 @@ struct bitcoind *new_bitcoind(const tal_t *ctx,
 	struct bitcoind *bitcoind = tal(ctx, struct bitcoind);
 
 	/* Use testnet by default, change later if we want another network */
-	bitcoind->chainparams = chainparams_for_network("testnet");
+	bitcoind->chainparams = chainparams_for_network("mktcoin-testnet");
 	bitcoind->cli = NULL;
 	bitcoind->datadir = NULL;
 	bitcoind->ld = ld;

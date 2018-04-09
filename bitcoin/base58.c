@@ -38,13 +38,13 @@ static char *to_base58(const tal_t *ctx, u8 version,
 char *bitcoin_to_base58(const tal_t *ctx, bool test_net,
 			const struct bitcoin_address *addr)
 {
-	return to_base58(ctx, test_net ? 111 : 0, &addr->addr);
+	return to_base58(ctx, test_net ? 221 : 110, &addr->addr);
 }
 
 char *p2sh_to_base58(const tal_t *ctx, bool test_net,
 		     const struct ripemd160 *p2sh)
 {
-	return to_base58(ctx, test_net ? 196 : 5, p2sh);
+	return to_base58(ctx, test_net ? 50 : 115, p2sh);
 }
 
 static bool from_base58(u8 *version,
@@ -74,9 +74,9 @@ bool bitcoin_from_base58(bool *test_net,
 	if (!from_base58(&version, &addr->addr, base58, len))
 		return false;
 
-	if (version == 111)
+	if (version == 221)
 		*test_net = true;
-	else if (version == 0)
+	else if (version == 110)
 		*test_net = false;
 	else
 		return false;
@@ -92,9 +92,9 @@ bool p2sh_from_base58(bool *test_net,
 	if (!from_base58(&version, p2sh, base58, len))
 		return false;
 
-	if (version == 196)
+	if (version == 50)
 		*test_net = true;
-	else if (version == 5)
+	else if (version == 115)
 		*test_net = false;
 	else
 		return false;
@@ -118,9 +118,9 @@ bool key_from_base58(const char *base58, size_t base58_len,
 	if (keybuf[1 + 32] != 1)
 		return false;
 
-	if (keybuf[0] == 128)
+	if (keybuf[0] == 238)
 		*test_net = false;
-	else if (keybuf[0] == 239)
+	else if (keybuf[0] == 93)
 		*test_net = true;
 	else
 		return false;
